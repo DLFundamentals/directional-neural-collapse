@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Directional NC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+      .fade-in-up {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+      .fade-in-up.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      body {
+        scroll-behavior: smooth;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 text-slate-800">
+    <header class="w-full max-w-5xl mx-auto py-4 px-4 flex justify-end">
+      <div class="relative inline-block text-left">
+        <div>
+          <button type="button" onclick="toggleDropdown(event)" class="inline-flex justify-center w-full rounded-md border border-slate-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
+            Related Works
+            <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+        <div id="dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden z-10" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+          <div class="py-1" role="none">
+            <a href="https://dlfundamentals.github.io/cl-nscl-representation-alignment/" target="_blank" class="text-slate-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabindex="-1">CL ≈ NSCL (ICLR 2026)</a>
+            <a href="https://dlfundamentals.github.io/ssl-is-approximately-sl/" target="_blank" class="text-slate-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabindex="-1">CL ≈ SCL (NeurIPS 2025)</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex flex-col items-center px-4 pt-2 pb-10 min-h-screen">
+      <section id="hero" class="w-full max-w-5xl text-center fade-in-up">
+        <h1 class="mb-4 text-4xl font-extrabold leading-tight md:text-5xl">
+          Directional Neural Collapse in <br class="hidden md:block" />
+          Self-Supervised Visual Representation Learning
+        </h1>
+        <div class="mt-2 space-y-1 text-lg font-medium text-slate-700 md:text-2xl">
+          <p>
+            <a href="https://achleshwar.github.io/" class="hover:underline" target="_blank">Achleshwar Luthra*</a>
+            · <a href="#" class="hover:underline" target="_blank">Yash Salunkhe*</a>
+            · <a href="https://tomergalanti.github.io/index.html" class="hover:underline" target="_blank">Tomer Galanti*</a>
+          </p>
+          <p class="text-slate-500 font-medium">Texas A&M University</p>
+          <p class="text-slate-600 italic">Under Review</p>
+        </div>
+      </section>
+
+      <section class="mt-10 flex flex-col md:flex-row items-center justify-center gap-8">
+        <a href="#" class="flex flex-col items-center hover:scale-105 transition-transform" target="_blank">
+          <i class="fab fa-github text-5xl text-slate-800"></i>
+          <span class="mt-2 text-md text-slate-600">Code</span>
+        </a>
+        <a href="#" class="flex flex-col items-center hover:scale-105 transition-transform" target="_blank">
+          <i class="fas fa-file-pdf text-5xl text-indigo-500"></i>
+          <span class="mt-2 text-md text-slate-600">Paper</span>
+        </a>
+      </section>
+
+      <section class="mt-20 w-full max-w-5xl text-left fade-in-up">
+        <h2 class="text-2xl font-bold mb-4">Overview: The Detective Story of High-Dimensional Geometry</h2>
+        <p class="text-lg mb-4 text-slate-700">
+          [cite_start]Self-supervised learning (SSL) is amazing at learning representations that transfer incredibly well with just a few labels[cite: 69, 70]. But <em>why</em> does it work so well?
+        </p>
+        <p class="text-lg mb-4 text-slate-700">
+          In the supervised learning world, there's a beautiful theory explaining what a "perfect" model looks like: <strong>Neural Collapse</strong>. [cite_start]Neural collapse tells us that at the end of training, all examples of a specific class perfectly cluster together[cite: 79]. Imagine taking hundreds of diverse dog images and projecting them down into a single, perfectly tight point in the embedding space.
+        </p>
+        
+        <div class="my-6 text-center text-slate-500 italic">
+          
+        </div>
+
+        <p class="text-lg mb-4 text-slate-700">
+          For a long time, we thought this total, global collapse was the ultimate goal. But here's the paradox: if you look at SSL representations, they are completely anisotropic. [cite_start]They are stretched out, messy, and retain a ton of "nuisance" variance from things like data augmentations[cite: 145, 224]. According to standard Neural Collapse theory, these models are a total mess—yet, in practice, they work exceptionally well!
+        </p>
+        <p class="text-lg text-slate-700">
+          Clearly, there's a gap in our understanding. We need a new geometric theory for SSL that actually embraces its messy, anisotropic nature. Let's walk through our detective story of high-dimensional geometry to see what's really going on.
+        </p>
+      </section>
+
+      <section class="mt-20 w-full max-w-5xl text-left fade-in-up">
+        <h2 class="text-2xl font-bold mb-4">Problem Setup: Moving Beyond "Baguette" Clusters</h2>
+        <p class="text-lg mb-4 text-slate-700">
+          Let's start with a standard metric called <strong>CDNV (Class-Distance-Normalized Variance)</strong>. It measures how tight your clusters are relative to how far apart the class means are:
+        </p>
+        
+        <div class="p-4 bg-indigo-50 border border-indigo-200 rounded-md my-6">
+           <p class="text-center text-lg md:text-xl">
+             $$V_{ij} := \frac{v_i + v_j}{d_{ij}^2}$$
+           </p>
+        </div>
+
+        <p class="text-lg mb-4 text-slate-700">
+          <em>(Check out our previous NeurIPS blog for a deep dive into CDNV visuals!)</em> But is a high CDNV always a bad thing? Let's build some intuition.
+        </p>
+        
+        <div class="my-6 text-center text-slate-500 italic">
+          
+        </div>
+
+        <p class="text-lg mb-4 text-slate-700">
+          Look at those elongated, "baguette-like" clusters. [cite_start]Standard CDNV averages variance across <em>all</em> directions[cite: 146, 354, 452]. So, it looks at those long baguettes, sees massive total variance, and predicts terrible generalization error. But if you actually train a linear probe or use a Nearest-Class-Centroid (NCC) classifier, it easily draws a clean line between them and gets high accuracy!
+        </p>
+        <p class="text-lg mb-4 text-slate-700">
+          This is why we need <strong>Directional CDNV</strong> ($\tilde{V}_{ij}$). [cite_start]It only measures the variance that actually pushes points across the decision boundary[cite: 148, 355]:
+        </p>
+
+        <div class="p-4 bg-red-50 border border-red-200 rounded-md my-6">
+           <p class="text-center text-lg md:text-xl">
+             $$\tilde{V}_{ij} := \frac{u_{ij}^{\top}\Sigma_i u_{ij}}{d_{ij}^2}$$
+           </p>
+        </div>
+
+        <p class="text-lg text-slate-700">
+          Alright, enough with the baguette analogies. Let's look at what actually happens inside these models during training.
+        </p>
+      </section>
+
+      <section class="mt-20 w-full max-w-5xl text-left">
+        <h2 class="text-2xl font-bold mb-6">Key Observations</h2>
+
+        <div class="mb-10 p-6 border rounded-md shadow-sm bg-white fade-in-up">
+            <h3 class="text-xl font-bold text-indigo-700 mb-4">1 · Pervasive Decision-Axis Collapse</h3>
+            <h4 class="font-semibold text-lg mb-2">The Claim:</h4>
+            <p class="mb-4 text-slate-700">
+              Directional collapse is a universal phenomenon in SSL, not just an artifact of one specific loss function.
+            </p>
+            <h4 class="font-semibold text-lg mb-2">The Evidence:</h4>
+            <p class="text-slate-700">
+              When we train models across various SSL paradigms (like SimCLR, VICReg, MAE, and DINO-v2), standard CDNV barely drops. [cite_start]But the <em>Directional CDNV</em> plummets[cite: 727]. [cite_start]These models are actively suppressing variance along the specific directions that separate classes, while completely ignoring the orthogonal "nuisance" directions[cite: 729]. 
+            </p>
+            <div class="my-6 text-center text-slate-500 italic p-8 border-2 border-dashed border-slate-300 rounded">
+                [Insert Figures here: CDNV vs Dir-CDNV across epochs]
+            </div>
+        </div>
+
+        <div class="mb-10 p-6 border rounded-md shadow-sm bg-white fade-in-up">
+            <h3 class="text-xl font-bold text-indigo-700 mb-4">2 · Reliable Certificates via Tighter Error Bounds</h3>
+            <h4 class="font-semibold text-lg mb-2">The Claim:</h4>
+            <p class="mb-4 text-slate-700">
+              Directional variance provides mathematically sound and practically tight guarantees for how well a model will perform.
+            </p>
+            <h4 class="font-semibold text-lg mb-2">The Evidence:</h4>
+            <p class="text-slate-700">
+              In our previous NeurIPS work, we showed that directional variance is the right way to think about SSL. But our new bound in this work is significantly tighter. [cite_start]We provide non-asymptotic multiclass generalization bounds where the leading term is purely the directional CDNV[cite: 153]. [cite_start]By cleanly separating the intrinsic decision-axis variability from finite-sample centroid-estimation errors, our new bound gives highly reliable, non-vacuous certificates for few-shot error at practical shot sizes[cite: 154, 749].
+            </p>
+            <div class="my-6 text-center text-slate-500 italic p-8 border-2 border-dashed border-slate-300 rounded">
+                [Insert Figures here: Few-shot error bounds tracking actual performance]
+            </div>
+        </div>
+
+        <div class="mb-10 p-6 border rounded-md shadow-sm bg-white fade-in-up">
+            <h3 class="text-xl font-bold text-indigo-700 mb-4">3 · Multitask Orthogonalization</h3>
+            <h4 class="font-semibold text-lg mb-2">The Claim:</h4>
+            <p class="mb-4 text-slate-700">
+              A single anisotropic representation can support many different downstream tasks by naturally assigning them nearly orthogonal decision spaces.
+            </p>
+            <h4 class="font-semibold text-lg mb-2">The Evidence:</h4>
+            <p class="text-slate-700 mb-4">
+              [cite_start]If Directional CDNV is small for multiple independent tasks, the underlying geometry mathematically forces the decision axes for those tasks to be nearly orthogonal[cite: 161, 453]. We verified this on synthetic data with distinct visual factors (color, shape, size, style). As training progresses, the cosine similarity between decision axes for different labelings rapidly decays to zero. The model does not collapse to a single discriminative direction; it allocates orthogonal subspaces to different semantic tasks.
+            </p>
+            
+            <div class="my-6 text-center text-slate-500 italic">
+              
+            </div>
+        </div>
+      </section>
+
+      <section class="mt-20 w-full max-w-5xl text-left fade-in-up">
+        <h2 class="text-2xl font-bold mb-4">Final Remarks: Why Anisotropy is a Feature, Not a Bug</h2>
+        <p class="text-lg leading-relaxed text-slate-700 mb-4">
+          Let's zoom in on that multitask orthogonality experiment. In supervised learning, achieving perfect Neural Collapse (low global CDNV) means <em>all</em> variance is collapsed. The representations become incredibly rigid and specialized only for the exact task they were trained on. But if you collapse everything, you destroy the feature variance needed for <em>other</em> tasks. A perfectly collapsed model can't easily generalize to new, unseen labelings!
+        </p>
+        <p class="text-lg leading-relaxed text-slate-700 mb-8">
+          This is exactly why SSL is arguably a superior pretraining method. [cite_start]By only collapsing along the necessary decision axes and leaving the rest of the space anisotropic, SSL naturally preserves independent features (like color, shape, or size) in orthogonal subspaces[cite: 162, 532, 839]. Anisotropy isn't a flaw in SSL—it's the exact reason it succeeds so brilliantly at multitask transfer.
+        </p>
+      </section>
+
+      <section id="bibtex" class="mt-20 max-w-5xl w-full fade-in-up">
+        <h2 class="text-2xl font-bold mb-4">BibTeX</h2>
+        <div class="relative">
+      <pre id="bibtex-entry" class="bg-slate-900 text-green-200 p-4 rounded overflow-x-auto text-sm leading-relaxed font-mono">
+@misc{2026decisionaxisgeometry,
+    title={Directional Neural Collapse in Self-Supervised Visual Representation Learning}, 
+    author={Achleshwar Luthra* and Yash Salunkhe* and Tomer Galanti*},
+    year={2026},
+    publisher={arXiv},
+}
+      </pre>
+            <button onclick="copyBibtex(event)" class="absolute top-2 right-2 px-3 py-1 text-xs bg-slate-800 text-white border border-slate-700 rounded hover:bg-slate-700 transition">
+                <i class="fas fa-copy mr-1"></i> Copy
+            </button>
+        </div>
+      </section>
+
+      <footer class="mt-20 border-t pt-6 text-center text-sm text-slate-500 w-full max-w-5xl">
+        © 2026 Built with ☕. <br />
+        Contact: <a href="mailto:luthra@tamu.edu" class="underline">luthra@tamu.edu</a>
+        &middot; <a href="mailto:galanti@tamu.edu" class="underline">galanti@tamu.edu</a>
+      </footer>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ]
+        });
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+        document.querySelectorAll('.fade-in-up').forEach((el) => observer.observe(el));
+      });
+
+      function copyBibtex(event) {
+        const text = document.getElementById("bibtex-entry").innerText;
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        const button = event.currentTarget;
+        button.innerHTML = '<i class="fas fa-check mr-1"></i> Copied!';
+        setTimeout(() => {
+            button.innerHTML = '<i class="fas fa-copy mr-1"></i> Copy';
+        }, 2000);
+      }
+
+    function toggleDropdown(event) {
+        event.stopPropagation();
+        document.getElementById('dropdown-menu').classList.toggle('hidden');
+    }
+
+    // Close dropdown if clicked outside
+    window.onclick = function(event) {
+        const dropdownMenu = document.getElementById('dropdown-menu');
+        if (!dropdownMenu.classList.contains('hidden')) {
+            dropdownMenu.classList.add('hidden');
+        }
+    }
+    </script>
+  </body>
+</html>
