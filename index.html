@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Directional NC</title>
+    <title>Directional NC 1.0</title>
+    <link rel="icon" type=""image/png" href="lab-logo.png" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"></script>
@@ -37,8 +39,8 @@
         </div>
         <div id="dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden z-10" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
           <div class="py-1" role="none">
-            <a href="https://dlfundamentals.github.io/cl-nscl-representation-alignment/" target="_blank" class="text-slate-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabindex="-1">CL ≈ NSCL (ICLR 2026)</a>
-            <a href="https://dlfundamentals.github.io/ssl-is-approximately-sl/" target="_blank" class="text-slate-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabindex="-1">CL ≈ SCL (NeurIPS 2025)</a>
+            <a href="https://dlfundamentals.github.io/cl-nscl-representation-alignment/" target="_blank" class="text-slate-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabindex="-1">CL-NSCL Alignment (ICLR 2026)</a>
+            <a href="https://dlfundamentals.github.io/ssl-is-approximately-sl/" target="_blank" class="text-slate-700 block px-4 py-2 text-sm hover:bg-slate-100" role="menuitem" tabindex="-1">CL ≈ NSCL (NeurIPS 2025)</a>
           </div>
         </div>
       </div>
@@ -47,13 +49,13 @@
     <main class="flex flex-col items-center px-4 pt-2 pb-10 min-h-screen">
       <section id="hero" class="w-full max-w-5xl text-center fade-in-up">
         <h1 class="mb-4 text-4xl font-extrabold leading-tight md:text-5xl">
-          Directional Neural Collapse in <br class="hidden md:block" />
-          Self-Supervised Visual Representation Learning
+          Directional Neural Collapse Explains <br class="hidden md:block" />
+           Few-Shot Transfer in Self-Supervised Learning
         </h1>
         <div class="mt-2 space-y-1 text-lg font-medium text-slate-700 md:text-2xl">
           <p>
             <a href="https://achleshwar.github.io/" class="hover:underline" target="_blank">Achleshwar Luthra*</a>
-            · <a href="#" class="hover:underline" target="_blank">Yash Salunkhe*</a>
+            · <a href="https://in.linkedin.com/in/yash-salunkhe-47a323226" class="hover:underline" target="_blank">Yash Salunkhe*</a>
             · <a href="https://tomergalanti.github.io/index.html" class="hover:underline" target="_blank">Tomer Galanti*</a>
           </p>
           <p class="text-slate-500 font-medium">Texas A&M University</p>
@@ -72,135 +74,369 @@
         </a>
       </section>
 
+      <!-- OVERVIEW -->
       <section class="mt-20 w-full max-w-5xl text-left fade-in-up">
-        <h2 class="text-2xl font-bold mb-4">Overview: The Detective Story of High-Dimensional Geometry</h2>
+        <h2 class="text-2xl font-bold mb-4">Overview</h2>
         <p class="text-lg mb-4 text-slate-700">
-          [cite_start]Self-supervised learning (SSL) is amazing at learning representations that transfer incredibly well with just a few labels[cite: 69, 70]. But <em>why</em> does it work so well?
+          Self-supervised learning (SSL) is amazing at learning representations that transfer incredibly well with just a few labels. But <em>why</em> does it work so well?
         </p>
         <p class="text-lg mb-4 text-slate-700">
-          In the supervised learning world, there's a beautiful theory explaining what a "perfect" model looks like: <strong>Neural Collapse</strong>. [cite_start]Neural collapse tells us that at the end of training, all examples of a specific class perfectly cluster together[cite: 79]. Imagine taking hundreds of diverse dog images and projecting them down into a single, perfectly tight point in the embedding space.
+          In the supervised learning world, there's a beautiful theory explaining what a "perfect" model looks like: 
+          <a href="https://www.pnas.org/doi/10.1073/pnas.2015509117" class="hover:underline text-indigo-600 font-medium" target="_blank">Neural Collapse</a>. 
+          Neural collapse tells us that at the end of training, all examples of a specific class perfectly cluster together. 
+          Imagine taking hundreds of diverse dog images and projecting them down into a single, perfectly tight point in the embedding space.
         </p>
         
-        <div class="my-6 text-center text-slate-500 italic">
-          
+        <!-- ILLUSTRATION -->
+        <div class="my-10 w-full flex justify-center fade-in-up">
+          <div class="w-full max-w-2xl aspect-[16/7] bg-white rounded-xl flex flex-col items-center justify-center p-6 shadow-sm">
+            <img src="assets/neural_collapse.gif" alt="Neural Collapse Illustration" class="w-full h-auto rounded">
+            <p class="text-center text-slate-500 text-sm max-w-md">Illustration showing diverse dog images converging into a single, perfectly tight cluster point in a 3D embedding space.</p>
+          </div>
         </div>
 
         <p class="text-lg mb-4 text-slate-700">
-          For a long time, we thought this total, global collapse was the ultimate goal. But here's the paradox: if you look at SSL representations, they are completely anisotropic. [cite_start]They are stretched out, messy, and retain a ton of "nuisance" variance from things like data augmentations[cite: 145, 224]. According to standard Neural Collapse theory, these models are a total mess—yet, in practice, they work exceptionally well!
+          For a long time, we thought this total, global collapse was the ultimate goal. 
+          But here's the paradox: if you look at SSL representations, they are completely anisotropic. They are stretched out, messy, and retain a ton of "nuisance" variance from things like data augmentations. 
         </p>
+
+        <p class="text-lg text-slate-700 mb-6">
+          According to standard Neural Collapse theory, these models are a total mess—yet, in practice, they work exceptionally well!
+          This leads us to ask a critical question:
+        </p>
+        
+        <!-- MAIN QUESTION -->
+        <div class="fade-in-up mx-auto my-8 w-full max-w-3xl rounded-md border border-black bg-indigo-50 px-6 py-4 text-center text-lg italic text-slate-800 shadow-sm">
+          <strong>
+            What geometric properties explain effective few-shot adaptation in self-supervised learning?
+          </strong>
+        </div>
+
         <p class="text-lg text-slate-700">
-          Clearly, there's a gap in our understanding. We need a new geometric theory for SSL that actually embraces its messy, anisotropic nature. Let's walk through our detective story of high-dimensional geometry to see what's really going on.
+          Let's walk through our analysis of high-dimensional geometry to see what's really going on.
         </p>
       </section>
 
+      <!-- PROBLEM SETUP -->
       <section class="mt-20 w-full max-w-5xl text-left fade-in-up">
-        <h2 class="text-2xl font-bold mb-4">Problem Setup: Moving Beyond "Baguette" Clusters</h2>
+        <h2 class="text-2xl font-bold mb-4">Problem Setup</h2>
         <p class="text-lg mb-4 text-slate-700">
-          Let's start with a standard metric called <strong>CDNV (Class-Distance-Normalized Variance)</strong>. It measures how tight your clusters are relative to how far apart the class means are:
+          Let's start with a standard metric called <strong> Class-Distance-Normalized Variance (CDNV) </strong>. It measures how tight your clusters are relative to how far apart the class means are:
         </p>
         
-        <div class="p-4 bg-indigo-50 border border-indigo-200 rounded-md my-6">
-           <p class="text-center text-lg md:text-xl">
+        <!-- Standard CDNV Formula (Side-by-side) -->
+        <div class="flex flex-col md:flex-row items-center gap-6 my-8">
+          <div class="flex-1 text-center text-xl md:text-2xl font-medium">
              $$V_{ij} := \frac{v_i + v_j}{d_{ij}^2}$$
-           </p>
+          </div>
+          <div class="flex-1">
+            <ul class="list-disc list-inside text-slate-700 space-y-2 text-md">
+              <li><strong>$v_i, v_j$</strong>: Variance within class $i$ and class $j$.</li>
+              <li><strong>$d_{ij}$</strong>: Distance between the centers (means) of class $i$ and class $j$.</li>
+            </ul>
+          </div>
         </div>
 
         <p class="text-lg mb-4 text-slate-700">
-          <em>(Check out our previous NeurIPS blog for a deep dive into CDNV visuals!)</em> But is a high CDNV always a bad thing? Let's build some intuition.
+          <a href="https://openreview.net/forum?id=SwIp410B6aQ" class="hover:underline text-indigo-600 font-medium" target="_blank">Recent theory</a> gives the following generalization bound based on this metric <em>(check out our previous 
+            <a href="https://dlfundamentals.github.io/ssl-is-approximately-sl/" class="hover:underline text-indigo-600 font-medium" target="_blank">NeurIPS blog</a> 
+            for a deep dive into CDNV visuals)</em>:
         </p>
         
-        <div class="my-6 text-center text-slate-500 italic">
-          
+        <!-- Previous Theory Bound (Professional Box) -->
+        <div class="mb-10 p-6 border-2 border-slate-200 bg-slate-50 rounded-lg shadow-sm hover:border-slate-300 transition-colors">
+          <div class="flex flex-col md:flex-row gap-6 items-center">
+            <div class="flex-1 text-center text-lg md:text-xl font-medium w-full overflow-x-auto">
+              $$\text{err}_{m,D}(f) \lesssim \left(1 + \frac{1}{m}\right) V_f(D_1, D_2)$$
+            </div>
+            <div class="flex-1 w-full border-t md:border-t-0 md:border-l border-slate-300 pt-4 md:pt-0 md:pl-6">
+              <ul class="list-disc list-inside text-sm text-slate-600 space-y-2">
+                <li><strong>$\text{err}_{m,D}(f)$</strong>: Generalization error for the downstream classifier.</li>
+                <li><strong>$m$</strong>: Number of labeled examples (shots) per class.</li>
+                <li><strong>$V_f(D_1, D_2)$</strong>: CDNV between the two class distributions.</li>
+              </ul>
+            </div>
+          </div>
         </div>
 
-        <p class="text-lg mb-4 text-slate-700">
-          Look at those elongated, "baguette-like" clusters. [cite_start]Standard CDNV averages variance across <em>all</em> directions[cite: 146, 354, 452]. So, it looks at those long baguettes, sees massive total variance, and predicts terrible generalization error. But if you actually train a linear probe or use a Nearest-Class-Centroid (NCC) classifier, it easily draws a clean line between them and gets high accuracy!
-        </p>
-        <p class="text-lg mb-4 text-slate-700">
-          This is why we need <strong>Directional CDNV</strong> ($\tilde{V}_{ij}$). [cite_start]It only measures the variance that actually pushes points across the decision boundary[cite: 148, 355]:
+        <p class="text-lg mb-8 text-slate-700">
+          This theoretical bound predicts low error if the CDNV is low. But what happens when CDNV is high? Let's look at a standard example:
         </p>
 
-        <div class="p-4 bg-red-50 border border-red-200 rounded-md my-6">
-           <p class="text-center text-lg md:text-xl">
+        <!-- Figure 1: Bad High CDNV (Side-by-side) -->
+        <div class="flex flex-col md:flex-row items-center gap-8 mb-10 fade-in-up">
+          <div class="flex-1 w-full p-4 shadow-sm flex flex-col items-center">
+            <span class="text-md font-bold text-slate-800 mb-2">High CDNV (Overlapping)</span>
+            <img src="./assets/bad_cdnv_case1.png" alt="Bad High CDNV Plot" class="w-full h-auto rounded">
+          </div>
+          <div class="flex-1">
+            <p class="text-lg text-slate-700">
+              In this scenario, high CDNV correctly predicts a problem. The clusters are completely overlapping, and a classifier would struggle to separate them. So far, the theory holds up—high CDNV is bad.
+            </p>
+          </div>
+        </div>
+
+        <p class="text-lg mb-8 text-slate-700 font-medium">
+          Let's consider another case...
+        </p>
+
+        <!-- Figure 2: Baguette High CDNV (Side-by-side) -->
+        <div class="flex flex-col md:flex-row items-center gap-8 mb-10 fade-in-up">
+          <div class="flex-1 w-full p-4 shadow-sm flex flex-col items-center">
+            <span class="text-md font-bold text-slate-800 mb-2">High CDNV (Separable)</span>
+            <img src="./assets/bad_cdnv_case2.png" alt="Baguette CDNV Plot" class="w-full h-auto rounded">
+          </div>
+          <div class="flex-1">
+            <p class="text-lg text-slate-700 mb-4">
+              Look at these elongated, "baguette-like" clusters. Because standard CDNV averages variance across <em>all</em> directions, it sees the massive variance along the stretched axis and outputs a very high penalty. It predicts terrible generalization.
+            </p>
+            <p class="text-lg text-slate-700">
+              <strong>But is this form of clustering not good enough?</strong> If you train a linear probe or use a Nearest-Class-Centroid Classifier(NCCC) here, it easily learns a decision boundary and gets perfect accuracy!
+            </p>
+          </div>
+        </div>
+
+        <p class="text-lg mb-8 text-slate-700">
+          This begs the question: <em>Does SSL form something like this?</em> If SSL representations naturally stretch out along task-irrelevant dimensions, it would perfectly explain why they have a stubbornly high global CDNV but still achieve amazing downstream performance.
+        </p>
+
+        <p class="text-lg mb-4 text-slate-700">
+          This is exactly why we need <strong>Directional CDNV</strong> ($\tilde{V}_{ij}$). Instead of looking at the whole baguette, it only measures the variance that actually pushes points across the decision boundary:
+        </p>
+
+        <!-- Directional CDNV -->
+        <div class="flex flex-col md:flex-row items-center gap-6 my-8">
+          <div class="flex-1 text-center text-xl md:text-2xl font-medium">
              $$\tilde{V}_{ij} := \frac{u_{ij}^{\top}\Sigma_i u_{ij}}{d_{ij}^2}$$
-           </p>
+          </div>
+          <div class="flex-1">
+            <ul class="list-disc list-inside text-slate-700 space-y-2 text-md">
+              <li><strong>$u_{ij}$</strong>: The unit vector along the decision axis between classes $i$ and $j$.</li>
+              <li><strong>$\Sigma_i$</strong>: The covariance matrix within class $i$.</li>
+              <li><strong>$d_{ij}$</strong>: Distance between the centers (means) of class $i$ and class $j$.</li>
+            </ul>
+          </div>
         </div>
 
         <p class="text-lg text-slate-700">
-          Alright, enough with the baguette analogies. Let's look at what actually happens inside these models during training.
+          Let's dive into our key observations that explain why this specific geometric property is the true engine behind few-shot transfer.
         </p>
       </section>
 
+      <!-- KEY OBSERVATIONS -->
       <section class="mt-20 w-full max-w-5xl text-left">
         <h2 class="text-2xl font-bold mb-6">Key Observations</h2>
 
+        <!-- KEY OBSERVATION 1: DECISION-AXIS COLLAPSE -->
         <div class="mb-10 p-6 border rounded-md shadow-sm bg-white fade-in-up">
-            <h3 class="text-xl font-bold text-indigo-700 mb-4">1 · Pervasive Decision-Axis Collapse</h3>
-            <h4 class="font-semibold text-lg mb-2">The Claim:</h4>
-            <p class="mb-4 text-slate-700">
-              Directional collapse is a universal phenomenon in SSL, not just an artifact of one specific loss function.
-            </p>
-            <h4 class="font-semibold text-lg mb-2">The Evidence:</h4>
-            <p class="text-slate-700">
-              When we train models across various SSL paradigms (like SimCLR, VICReg, MAE, and DINO-v2), standard CDNV barely drops. [cite_start]But the <em>Directional CDNV</em> plummets[cite: 727]. [cite_start]These models are actively suppressing variance along the specific directions that separate classes, while completely ignoring the orthogonal "nuisance" directions[cite: 729]. 
-            </p>
-            <div class="my-6 text-center text-slate-500 italic p-8 border-2 border-dashed border-slate-300 rounded">
-                [Insert Figures here: CDNV vs Dir-CDNV across epochs]
-            </div>
-        </div>
-
-        <div class="mb-10 p-6 border rounded-md shadow-sm bg-white fade-in-up">
-            <h3 class="text-xl font-bold text-indigo-700 mb-4">2 · Reliable Certificates via Tighter Error Bounds</h3>
-            <h4 class="font-semibold text-lg mb-2">The Claim:</h4>
-            <p class="mb-4 text-slate-700">
-              Directional variance provides mathematically sound and practically tight guarantees for how well a model will perform.
-            </p>
-            <h4 class="font-semibold text-lg mb-2">The Evidence:</h4>
-            <p class="text-slate-700">
-              In our previous NeurIPS work, we showed that directional variance is the right way to think about SSL. But our new bound in this work is significantly tighter. [cite_start]We provide non-asymptotic multiclass generalization bounds where the leading term is purely the directional CDNV[cite: 153]. [cite_start]By cleanly separating the intrinsic decision-axis variability from finite-sample centroid-estimation errors, our new bound gives highly reliable, non-vacuous certificates for few-shot error at practical shot sizes[cite: 154, 749].
-            </p>
-            <div class="my-6 text-center text-slate-500 italic p-8 border-2 border-dashed border-slate-300 rounded">
-                [Insert Figures here: Few-shot error bounds tracking actual performance]
-            </div>
-        </div>
-
-        <div class="mb-10 p-6 border rounded-md shadow-sm bg-white fade-in-up">
-            <h3 class="text-xl font-bold text-indigo-700 mb-4">3 · Multitask Orthogonalization</h3>
-            <h4 class="font-semibold text-lg mb-2">The Claim:</h4>
-            <p class="mb-4 text-slate-700">
-              A single anisotropic representation can support many different downstream tasks by naturally assigning them nearly orthogonal decision spaces.
-            </p>
-            <h4 class="font-semibold text-lg mb-2">The Evidence:</h4>
-            <p class="text-slate-700 mb-4">
-              [cite_start]If Directional CDNV is small for multiple independent tasks, the underlying geometry mathematically forces the decision axes for those tasks to be nearly orthogonal[cite: 161, 453]. We verified this on synthetic data with distinct visual factors (color, shape, size, style). As training progresses, the cosine similarity between decision axes for different labelings rapidly decays to zero. The model does not collapse to a single discriminative direction; it allocates orthogonal subspaces to different semantic tasks.
+            <h3 class="text-xl font-bold mb-4">1 · Pervasive Decision-Axis Collapse</h3>
+            <p class="text-slate-700 mb-6">
+              Directional neural collapse is a universal phenomenon in SSL.
+              When we train models across various SSL paradigms (like SimCLR, VICReg, MAE, and DINO-v2), standard CDNV barely drops. 
+              But the <em>Directional CDNV</em> plummets. These models are actively suppressing variance along the specific directions 
+              that separate classes, while completely ignoring the orthogonal "nuisance" directions. 
             </p>
             
-            <div class="my-6 text-center text-slate-500 italic">
-              
+            <!-- Tabs Navigation -->
+            <div class="border-b border-slate-200 mb-6">
+                <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                    <button onclick="switchTab('fig2')" id="tab-fig2" class="border-indigo-500 text-indigo-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                        CDNV vs. Dir-CDNV
+                    </button>
+                    <button onclick="switchTab('fig4')" id="tab-fig4" class="border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                        Variance Decomposition
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Tab Content: Figure 2 -->
+            <div id="content-fig2" class="block">
+                <p class="text-sm text-slate-600 mb-6 italic">
+                    <strong>Decision-axis collapse emerges during SSL training.</strong> Directional CDNV decreases dramatically over training (from roughly 2⁻¹ down to 2⁻⁵), while standard CDNV decreases only modestly or even increases. This indicates that SSL models primarily tighten class geometry along separating directions even when overall within-class variability is large.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex flex-col items-center bg-slate-50 border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">MAE (ViT-B/16)</span>
+                        <img src="./assets/cdnv_bounds/mae.png" alt="MAE CDNV Plot" class="w-full h-auto rounded">
+                    </div>
+                    <div class="flex flex-col items-center bg-slate-50 border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">SimCLR (ResNet-50)</span>
+                        <img src="./assets/cdnv_bounds/simclr.png" alt="SimCLR CDNV Plot" class="w-full h-auto rounded">
+                    </div>
+                    <div class="flex flex-col items-center bg-slate-50 border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">DINO-v2 (ViT-B/16)</span>
+                        <img src="./assets/cdnv_bounds/dino.png" alt="DINO-v2 CDNV Plot" class="w-full h-auto rounded">
+                    </div>
+                    <div class="flex flex-col items-center bg-slate-50 border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">VICReg (ResNet-50)</span>
+                        <img src="./assets/cdnv_bounds/vicreg.png" alt="VICReg CDNV Plot" class="w-full h-auto rounded">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Figure 4 -->
+            <div id="content-fig4" class="hidden">
+                <p class="text-sm text-slate-600 mb-6 italic">
+                    <strong>Decision-axis variance collapses while orthogonal variance remains large.</strong> Within-class variance decomposed into decision-axis and orthogonal components shows rapid collapse along the task-relevant direction despite persistently large orthogonal variance.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex flex-col items-center bg-slate-50 border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">MAE (ViT-B/16)</span>
+                        <img src="./assets/variance_decomp/mae.png" alt="MAE Variance Plot" class="w-full h-auto rounded">
+                    </div>
+                    <div class="flex flex-col items-center bg-slate-50 border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">SimCLR (ResNet-50)</span>
+                        <img src="./assets/variance_decomp/simclr.png" alt="SimCLR Variance Plot" class="w-full h-auto rounded">
+                    </div>
+                    <div class="flex flex-col items-center bg-slate-50 border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">DINO-v2 (ViT-B/16)</span>
+                        <img src="./assets/variance_decomp/dino.png" alt="DINO-v2 Variance Plot" class="w-full h-auto rounded">
+                    </div>
+                    <div class="flex flex-col items-center bg-slate-50 border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">VICReg (ResNet-50)</span>
+                        <img src="./assets/variance_decomp/vicreg.png" alt="VICReg Variance Plot" class="w-full h-auto rounded">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KEY OBSERVATION 2: ERROR BOUNDS -->
+        <div class="mb-10 p-6 border rounded-md shadow-sm bg-white fade-in-up">
+            <h3 class="text-xl font-bold mb-4">2 · Reliable Certificates via Tighter Error Bounds</h3>
+            <p class="text-slate-700 mb-6">
+            Directional variance provides mathematically sound and practically tight guarantees for how well a model will perform.
+            Our bound provides non-asymptotic multiclass generalization bounds where the leading term is purely the directional CDNV. 
+            By cleanly separating the intrinsic decision-axis variability from finite-sample centroid-estimation errors, our new bound gives highly reliable, 
+            non-vacuous certificates for few-shot error at practical shot sizes.
+            </p>
+
+            <!-- Tabs Navigation for Observation 2 -->
+            <div class="border-b border-slate-200 mb-6">
+                <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                    <button onclick="switchTabObs2('c2')" id="tab-c2" class="border-indigo-500 text-indigo-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                        C=2
+                    </button>
+                    <button onclick="switchTabObs2('c3')" id="tab-c3" class="border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                        C=3
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Tab Content: C=2 -->
+            <div id="content-c2" class="block">
+                <p class="text-sm text-slate-600 mb-6 italic">
+                    <strong>Decision-axis variance yields informative few-shot certificates.</strong> Few-shot NCC test error versus the number of shots per class ($m$). Our finite-$m$ certificates are highly informative at practical shot counts and closely track the observed few-shot error, dropping well below the random chance threshold.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Row 1 -->
+                    <div class="flex flex-col items-center bg-white border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">MAE (ViT-B/16)</span>
+                        <img src="./assets/error_bounds/C2/mae.png" alt="MAE Bounds C=2" class="w-full h-auto rounded">
+                    </div>
+                    <div class="flex flex-col items-center bg-white border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">CLIP (ViT-B/16)</span>
+                        <img src="./assets/error_bounds/C2/clip.png" alt="CLIP Bounds C=2" class="w-full h-auto rounded">
+                    </div>
+                    <div class="flex flex-col items-center bg-white border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">I-JEPA (ViT-B/16)</span>
+                        <img src="./assets/error_bounds/C2/ijepa.png" alt="I-JEPA Bounds C=2" class="w-full h-auto rounded">
+                    </div>
+                    <!-- Row 2 -->
+                    <div class="flex flex-col items-center bg-white border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">SigLIP (ViT-B/16)</span>
+                        <img src="./assets/error_bounds/C2/siglip.png" alt="SigLIP Bounds C=2" class="w-full h-auto rounded">
+                    </div>
+                    <div class="flex flex-col items-center bg-white border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">SimCLR (ResNet-50)</span>
+                        <img src="./assets/error_bounds/C2/simclr.png" alt="SimCLR Bounds C=2" class="w-full h-auto rounded">
+                    </div>
+                    <div class="flex flex-col items-center bg-white border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">VICReg (ResNet-50)</span>
+                        <img src="./assets/error_bounds/C2/vicreg.png" alt="VICReg Bounds C=2" class="w-full h-auto rounded">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: C=3 -->
+            <div id="content-c3" class="hidden">
+                <p class="text-sm text-slate-600 mb-6 italic">
+                    <strong>Decision-axis variance yields informative few-shot certificates.</strong> Few-shot NCC test error versus the number of shots per class ($m$). Our finite-$m$ certificates are highly informative at practical shot counts and closely track the observed few-shot error, dropping well below the random chance threshold.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Row 1 -->
+                    <div class="flex flex-col items-center bg-white border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">MAE (ViT-B/16)</span>
+                        <img src="./assets/error_bounds/C3/mae.png" alt="MAE Bounds C=3" class="w-full h-auto rounded">
+                    </div>
+                    <div class="flex flex-col items-center bg-white border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">CLIP (ViT-B/16)</span>
+                        <img src="./assets/error_bounds/C3/clip.png" alt="CLIP Bounds C=3" class="w-full h-auto rounded">
+                    </div>
+                    <div class="flex flex-col items-center bg-white border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">I-JEPA (ViT-B/16)</span>
+                        <img src="./assets/error_bounds/C3/ijepa.png" alt="I-JEPA Bounds C=3" class="w-full h-auto rounded">
+                    </div>
+                    <!-- Row 2 -->
+                    <div class="flex flex-col items-center bg-white border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">SigLIP (ViT-B/16)</span>
+                        <img src="./assets/error_bounds/C3/siglip.png" alt="SigLIP Bounds C=3" class="w-full h-auto rounded">
+                    </div>
+                    <div class="flex flex-col items-center bg-white border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">SimCLR (ResNet-50)</span>
+                        <img src="./assets/error_bounds/C3/simclr.png" alt="SimCLR Bounds C=3" class="w-full h-auto rounded">
+                    </div>
+                    <div class="flex flex-col items-center bg-white border border-slate-200 rounded-lg p-3 shadow-sm">
+                        <span class="text-md font-bold text-slate-800 mb-2">VICReg (ResNet-50)</span>
+                        <img src="./assets/error_bounds/C3/vicreg.png" alt="VICReg Bounds C=3" class="w-full h-auto rounded">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- KEY OBSERVATION 3: MULTITASK LEARNING -->
+        <div class="mb-10 p-6 border rounded-md shadow-sm bg-white fade-in-up">
+            <h3 class="text-xl font-bold mb-4">3 · Multitask Orthogonalization</h3>
+            <p class="text-slate-700 mb-6">
+            A single anisotropic representation can support many different downstream tasks by naturally assigning them nearly orthogonal decision spaces.
+            If Directional CDNV is small for multiple independent tasks, the underlying geometry mathematically forces the decision axes for those tasks to be nearly orthogonal. 
+            We verified this on synthetic data with distinct visual factors (color, shape, size, style). As training progresses, the cosine similarity between decision axes for 
+            different labelings rapidly decays to zero. The model does not collapse to a single discriminative direction; it allocates orthogonal subspaces to different semantic tasks.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="flex flex-col items-center bg-white border border-slate-200 rounded-lg p-3 shadow-sm">
+                    <span class="text-md font-bold text-slate-800 mb-2">SimCLR (ResNet-18)</span>
+                    <img src="./assets/multitask/simclr.png" alt="SimCLR Multitask Orthogonalization Plot" class="w-full h-auto rounded">
+                </div>
+                <div class="flex flex-col items-center bg-white border border-slate-200 rounded-lg p-3 shadow-sm">
+                    <span class="text-md font-bold text-slate-800 mb-2">VICReg (ResNet-50)</span>
+                    <img src="./assets/multitask/vicreg.png" alt="VICReg Multitask Orthogonalization Plot" class="w-full h-auto rounded">
+                </div>
             </div>
         </div>
       </section>
 
       <section class="mt-20 w-full max-w-5xl text-left fade-in-up">
-        <h2 class="text-2xl font-bold mb-4">Final Remarks: Why Anisotropy is a Feature, Not a Bug</h2>
+        <h2 class="text-2xl font-bold mb-4">Why Anisotropy is a feature and not a bug</h2>
         <p class="text-lg leading-relaxed text-slate-700 mb-4">
           Let's zoom in on that multitask orthogonality experiment. In supervised learning, achieving perfect Neural Collapse (low global CDNV) means <em>all</em> variance is collapsed. The representations become incredibly rigid and specialized only for the exact task they were trained on. But if you collapse everything, you destroy the feature variance needed for <em>other</em> tasks. A perfectly collapsed model can't easily generalize to new, unseen labelings!
         </p>
         <p class="text-lg leading-relaxed text-slate-700 mb-8">
-          This is exactly why SSL is arguably a superior pretraining method. [cite_start]By only collapsing along the necessary decision axes and leaving the rest of the space anisotropic, SSL naturally preserves independent features (like color, shape, or size) in orthogonal subspaces[cite: 162, 532, 839]. Anisotropy isn't a flaw in SSL—it's the exact reason it succeeds so brilliantly at multitask transfer.
+          This is exactly why SSL is arguably a superior pretraining method. By only collapsing along the necessary decision axes, SSL naturally preserves independent features (like color, shape, or size) in orthogonal subspaces. Anisotropy isn't a flaw in SSL—it's the exact reason it succeeds so brilliantly at multitask transfer.
         </p>
       </section>
-
+      
+      <!-- BIBTEX -->
       <section id="bibtex" class="mt-20 max-w-5xl w-full fade-in-up">
         <h2 class="text-2xl font-bold mb-4">BibTeX</h2>
         <div class="relative">
       <pre id="bibtex-entry" class="bg-slate-900 text-green-200 p-4 rounded overflow-x-auto text-sm leading-relaxed font-mono">
-@misc{2026decisionaxisgeometry,
-    title={Directional Neural Collapse in Self-Supervised Visual Representation Learning}, 
-    author={Achleshwar Luthra* and Yash Salunkhe* and Tomer Galanti*},
-    year={2026},
-    publisher={arXiv},
-}
+      @misc{2026directionalcollapse,
+          title={Directional Neural Collapse in Self-Supervised Visual Representation Learning}, 
+          author={Achleshwar Luthra* and Yash Salunkhe* and Tomer Galanti*},
+          year={2026},
+          publisher={ArXiv},
+      }
       </pre>
             <button onclick="copyBibtex(event)" class="absolute top-2 right-2 px-3 py-1 text-xs bg-slate-800 text-white border border-slate-700 rounded hover:bg-slate-700 transition">
                 <i class="fas fa-copy mr-1"></i> Copy
@@ -264,6 +500,34 @@
         if (!dropdownMenu.classList.contains('hidden')) {
             dropdownMenu.classList.add('hidden');
         }
+    }
+
+    function switchTab(tab) {
+        const activeClass = 'border-indigo-500 text-indigo-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors';
+        const inactiveClass = 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors';
+        
+        document.getElementById('tab-fig2').className = tab === 'fig2' ? activeClass : inactiveClass;
+        document.getElementById('tab-fig4').className = tab === 'fig4' ? activeClass : inactiveClass;
+        
+        document.getElementById('content-fig2').classList.toggle('hidden', tab !== 'fig2');
+        document.getElementById('content-fig2').classList.toggle('block', tab === 'fig2');
+        
+        document.getElementById('content-fig4').classList.toggle('hidden', tab !== 'fig4');
+        document.getElementById('content-fig4').classList.toggle('block', tab === 'fig4');
+    }
+
+    function switchTabObs2(tab) {
+        const activeClass = 'border-indigo-500 text-indigo-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors';
+        const inactiveClass = 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors';
+        
+        document.getElementById('tab-c2').className = tab === 'c2' ? activeClass : inactiveClass;
+        document.getElementById('tab-c3').className = tab === 'c3' ? activeClass : inactiveClass;
+        
+        document.getElementById('content-c2').classList.toggle('hidden', tab !== 'c2');
+        document.getElementById('content-c2').classList.toggle('block', tab === 'c2');
+        
+        document.getElementById('content-c3').classList.toggle('hidden', tab !== 'c3');
+        document.getElementById('content-c3').classList.toggle('block', tab === 'c3');
     }
     </script>
   </body>
