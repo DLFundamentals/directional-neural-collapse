@@ -102,23 +102,16 @@
           That being said, this property strongly relies on the model having access to class labels during training to know which samples to collapse together.
           Without labels, as in SSL, you can't expect the model to exhibit this global neural collapse.
         </p>
-
-        <!-- remove this
-        <p class="text-lg text-slate-700 mb-6">
-          According to standard Neural Collapse theory, these models are a total mess—yet, in practice, they work exceptionally well!
-          This leads us to ask a critical question:
-        </p> -->
         
         <!-- MAIN QUESTION -->
+         <p class="text-lg mb-4 text-slate-700 font-medium">
+          This raises a fundamental question:
+         </p>
         <div class="fade-in-up mx-auto my-8 w-full max-w-3xl rounded-md border border-black bg-indigo-50 px-6 py-4 text-center text-lg italic text-slate-800 shadow-sm">
           <strong>
             What actual geometric properties explain the effective few-shot adaptation in self-supervised learning?
           </strong>
         </div>
-
-        <p class="text-lg text-slate-700">
-          Let's walk through our analysis of high-dimensional geometry to see what's really going on.
-        </p>
       </section>
 
       <!-- PROBLEM SETUP -->
@@ -126,16 +119,18 @@
         <h2 class="text-2xl font-bold mb-4">Problem Setup</h2>
         <p class="text-lg mb-4 text-slate-700">
           <!-- degree of nc-->
-          Let's start with a standard metric called <strong> Class-Distance-Normalized Variance (CDNV) </strong>. It measures how tight your clusters are relative to how far apart the class means are:
+          Let's start with a standard metric that measures the degree of neural collapse, called <span class="font-bold text-orange-500">Class-Distance-Normalized Variance aka CDNV</span> <em>(check out our previous 
+            <a href="https://dlfundamentals.github.io/ssl-is-approximately-sl/" class="hover:underline text-indigo-600 font-medium" target="_blank">NeurIPS blog</a> 
+            for a deep dive into CDNV visuals)</em>. It measures how tight your clusters are relative to how far apart the class means are:
         </p>
-        
-        <!-- Standard CDNV Formula (Side-by-side) -->
-        <div class="flex flex-col md:flex-row items-center gap-6 my-8">
-          <div class="flex-1 text-center text-xl md:text-2xl font-medium">
+
+        <!-- Standard CDNV Formula (Stacked inside box) -->
+        <div class="my-8 max-w-2xl mx-auto p-6 border-2 border-orange-500 bg-orange-50 rounded-lg shadow-sm flex flex-col items-center">
+          <div class="text-center text-xl md:text-2xl font-medium w-full pb-4 mb-4 border-b border-orange-200">
              $$V_{ij} := \frac{v_i + v_j}{d_{ij}^2}$$
           </div>
-          <div class="flex-1">
-            <ul class="list-disc list-inside text-slate-700 space-y-2 text-md">
+          <div class="w-full flex justify-center">
+            <ul class="list-disc text-slate-700 space-y-2 text-md pl-6">
               <li><strong>$v_i, v_j$</strong>: Variance within class $i$ and class $j$.</li>
               <li><strong>$d_{ij}$</strong>: Distance between the centers (means) of class $i$ and class $j$.</li>
             </ul>
@@ -143,13 +138,25 @@
         </div>
 
         <p class="text-lg mb-4 text-slate-700">
-          <a href="https://openreview.net/forum?id=SwIp410B6aQ" class="hover:underline text-indigo-600 font-medium" target="_blank">Recent theory</a> gives the following generalization bound based on this metric <em>(check out our previous 
-            <a href="https://dlfundamentals.github.io/ssl-is-approximately-sl/" class="hover:underline text-indigo-600 font-medium" target="_blank">NeurIPS blog</a> 
-            for a deep dive into CDNV visuals)</em>:
+          <a href="https://openreview.net/forum?id=SwIp410B6aQ" class="hover:underline text-indigo-600 font-medium" target="_blank">Recent theory</a> gives the following generalization bound based on this metric:
         </p>
         
-        <!-- Previous Theory Bound (Professional Box) -->
-        <div class="mb-10 p-6 border-2 border-slate-200 bg-slate-50 rounded-lg shadow-sm hover:border-slate-300 transition-colors">
+        <!-- Previous Theory Bound -->
+
+        <div class="mb-10 p-6 border-2 border-slate-200 bg-slate-50 rounded-lg shadow-sm flex flex-col items-center hover:border-slate-300 transition-colors">
+          <div class="text-center text-xl md:text-2xl font-medium w-full pb-4 mb-4 border-b border-slate-300">
+             $$\text{err}_{m,D}(f) \lesssim \left(1 + \frac{1}{m}\right) V_f(D_1, D_2)$$
+          </div>
+          <div class="w-full flex justify-center">
+            <ul class="list-disc text-slate-700 space-y-2 text-md pl-6">
+              <li><strong>$\text{err}_{m,D}(f)$</strong>: Generalization error for the downstream classifier.</li>
+              <li><strong>$m$</strong>: Number of labeled examples (shots) per class.</li>
+              <li><strong>$V_f(D_1, D_2)$</strong>: CDNV between the two class distributions.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- <div class="mb-10 p-6 border-2 border-slate-200 bg-slate-50 rounded-lg shadow-sm hover:border-slate-300 transition-colors">
           <div class="flex flex-col md:flex-row gap-6 items-center">
             <div class="flex-1 text-center text-lg md:text-xl font-medium w-full overflow-x-auto">
               $$\text{err}_{m,D}(f) \lesssim \left(1 + \frac{1}{m}\right) V_f(D_1, D_2)$$
@@ -162,7 +169,7 @@
               </ul>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <p class="text-lg mb-8 text-slate-700">
           This theoretical bound predicts low error if the CDNV is low. But what happens when CDNV is high? Let's look at a standard example:
@@ -206,16 +213,16 @@
         </p>
 
         <p class="text-lg mb-4 text-slate-700">
-          This is exactly why we need <strong>Directional CDNV</strong> ($\tilde{V}_{ij}$). Instead of looking at the whole baguette, it only measures the variance that actually pushes points across the decision boundary:
+          This is exactly why we need <em><span class="font-bold text-blue-700">Directional CDNV</span></em>. Instead of looking at the whole baguette, it only measures the variance that actually pushes points across the decision boundary:
         </p>
 
         <!-- Directional CDNV -->
-        <div class="flex flex-col md:flex-row items-center gap-6 my-8">
-          <div class="flex-1 text-center text-xl md:text-2xl font-medium">
+         <div class="my-8 max-w-2xl mx-auto p-6 border-2 border-blue-700 bg-blue-50 rounded-lg shadow-sm flex flex-col items-center">
+          <div class="text-center text-xl md:text-2xl font-medium w-full pb-4 mb-4 border-b border-blue-200">
              $$\tilde{V}_{ij} := \frac{u_{ij}^{\top}\Sigma_i u_{ij}}{d_{ij}^2}$$
           </div>
-          <div class="flex-1">
-            <ul class="list-disc list-inside text-slate-700 space-y-2 text-md">
+          <div class="w-full flex justify-center">
+            <ul class="list-disc text-slate-700 space-y-2 text-md pl-6">
               <li><strong>$u_{ij}$</strong>: The unit vector along the decision axis between classes $i$ and $j$.</li>
               <li><strong>$\Sigma_i$</strong>: The covariance matrix within class $i$.</li>
               <li><strong>$d_{ij}$</strong>: Distance between the centers (means) of class $i$ and class $j$.</li>
@@ -237,8 +244,8 @@
             <h3 class="text-xl font-bold mb-4">1 · Pervasive Decision-Axis Collapse</h3>
             <p class="text-slate-700 mb-6">
               Directional neural collapse is a universal phenomenon in SSL.
-              When we train models across various SSL paradigms (like SimCLR, VICReg, MAE, and DINO-v2), standard CDNV barely drops. 
-              But the <em>Directional CDNV</em> plummets. These models are actively suppressing variance along the specific directions 
+              When we train models across various SSL paradigms (like SimCLR, VICReg, MAE, and DINO-v2), <em><span class="font-bold text-orange-500">standard CDNV</span></em> barely drops. 
+              But the <em><span class="font-bold text-blue-700">Directional CDNV</span></em> plummets. These models are actively suppressing variance along the specific directions 
               that separate classes, while completely ignoring the orthogonal "nuisance" directions. 
             </p>
             
