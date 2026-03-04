@@ -415,14 +415,29 @@
 
         <!-- KEY OBSERVATION 3: MULTITASK LEARNING -->
         <div class="mb-10 p-6 border rounded-md shadow-sm bg-white fade-in-up">
-            <h3 class="text-xl font-bold mb-4">3 · Multitask Orthogonalization</h3>
-            <p class="text-slate-700 mb-6">
-            A single anisotropic representation can support many different downstream tasks by naturally assigning them nearly orthogonal decision spaces.
-            If Directional CDNV is small for multiple independent tasks, the underlying geometry mathematically forces the decision axes for those tasks to be nearly orthogonal. 
-            We verified this on synthetic data with distinct visual factors (color, shape, size, style). As training progresses, the cosine similarity between decision axes for 
-            different labelings rapidly decays to zero. The model does not collapse to a single discriminative direction; it allocates orthogonal subspaces to different semantic tasks.
-            </p>
+            <h3 class="text-xl font-bold text-indigo-700 mb-4">3 · Multitask Orthogonalization</h3>
+            <div class="flex flex-col md:flex-row items-center gap-8 mb-8">
+              <!-- Left side: Text -->
+              <div class="flex-1">
+                <p class="text-lg text-slate-700">
+                  A single anisotropic representation can support many different downstream tasks by naturally assigning them nearly orthogonal decision spaces.
+                  If Directional CDNV is small for multiple independent tasks, the underlying geometry mathematically forces the decision axes for those tasks to be nearly orthogonal. 
+                </p>
+              </div>
+              
+              <!-- Right side: New Diagram -->
+              <div class="flex-1 w-full">
+                <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm flex flex-col items-center">
+                  <img src="./assets/multitask_illustration.png" alt="Orthogonal Subspaces Diagram" class="w-full h-auto rounded">
+                </div>
+              </div>
+            </div>
             
+            <p class="text-lg mb-4 text-slate-700">
+              We verified this on synthetic data with distinct visual factors (color, shape, size, style). As training progresses, the cosine similarity between decision axes for different labelings rapidly decays to zero. 
+              The model does not collapse to a single discriminative direction; it allocates orthogonal subspaces to different semantic tasks.
+            </p>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="flex flex-col items-center bg-white border border-slate-200 rounded-lg p-3 shadow-sm">
                     <span class="text-md font-bold text-slate-800 mb-2">SimCLR (ResNet-18)</span>
