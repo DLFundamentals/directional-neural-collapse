@@ -156,21 +156,6 @@
           </div>
         </div>
 
-        <!-- <div class="mb-10 p-6 border-2 border-slate-200 bg-slate-50 rounded-lg shadow-sm hover:border-slate-300 transition-colors">
-          <div class="flex flex-col md:flex-row gap-6 items-center">
-            <div class="flex-1 text-center text-lg md:text-xl font-medium w-full overflow-x-auto">
-              $$\text{err}_{m,D}(f) \lesssim \left(1 + \frac{1}{m}\right) V_f(D_1, D_2)$$
-            </div>
-            <div class="flex-1 w-full border-t md:border-t-0 md:border-l border-slate-300 pt-4 md:pt-0 md:pl-6">
-              <ul class="list-disc list-inside text-sm text-slate-600 space-y-2">
-                <li><strong>$\text{err}_{m,D}(f)$</strong>: Generalization error for the downstream classifier.</li>
-                <li><strong>$m$</strong>: Number of labeled examples (shots) per class.</li>
-                <li><strong>$V_f(D_1, D_2)$</strong>: CDNV between the two class distributions.</li>
-              </ul>
-            </div>
-          </div>
-        </div> -->
-
         <p class="text-lg mb-8 text-slate-700">
           This theoretical bound predicts low error if the CDNV is low. But what happens when CDNV is high? Let's look at a standard example:
         </p>
@@ -200,16 +185,21 @@
           </div>
           <div class="flex-1">
             <p class="text-lg text-slate-700 mb-4">
-              Look at these elongated, "baguette-like" clusters. Because standard CDNV averages variance across <em>all</em> directions, it sees the massive variance along the stretched axis and outputs a very high penalty. It predicts terrible generalization.
+              Look at these elongated, "baguette-like" clusters. Because standard CDNV averages variance across <em>all</em> directions, it sees the massive variance along the stretched axis and outputs a very high penalty. 
+              It predicts terrible generalization.
             </p>
             <p class="text-lg text-slate-700">
-              <strong>But is this form of clustering not good enough?</strong> If you train a linear probe or use a Nearest-Class-Centroid Classifier(NCCC) here, it easily learns a decision boundary and gets perfect accuracy!
+              <strong>But is this form of clustering not good enough?</strong> If you train a linear probe, it easily learns a decision boundary and gets perfect accuracy!
             </p>
           </div>
         </div>
 
         <p class="text-lg mb-8 text-slate-700">
-          This begs the question: <em>Does SSL form something like this?</em> If SSL representations naturally stretch out along task-irrelevant dimensions, it would perfectly explain why they have a high global CDNV but still achieve competitive downstream performance.
+          This begs the question: 
+          <blockquote class="border-l-4 border-slate-300 pl-4 italic text-slate-600 mb-6 text-lg">
+          Do SSL representations naturally stretch out along task-irrelevant dimensions? <br />
+          If so, it would perfectly explain why they have a high global CDNV but still achieve competitive downstream performance.
+          </blockquote>
         </p>
 
         <p class="text-lg mb-4 text-slate-700">
@@ -315,11 +305,29 @@
         <!-- KEY OBSERVATION 2: ERROR BOUNDS -->
         <div class="mb-10 p-6 border rounded-md shadow-sm bg-white fade-in-up">
             <h3 class="text-xl font-bold mb-4">2 · Reliable Certificates via Tighter Error Bounds</h3>
-            <p class="text-slate-700 mb-6">
-            Directional variance provides mathematically sound and practically tight guarantees for how well a model will perform.
-            Our bound provides non-asymptotic multiclass generalization bounds where the leading term is purely the directional CDNV. 
-            By cleanly separating the intrinsic decision-axis variability from finite-sample centroid-estimation errors, our new bound gives highly reliable, 
-            non-vacuous certificates for few-shot error at practical shot sizes.
+            <p class="text-lg text-slate-700 mb-6">
+              Directional variance provides mathematically sound and practically tight guarantees for how well a model will perform. 
+              We provide non-asymptotic multiclass generalization bounds where the leading term is purely the <em>directional</em> CDNV:
+            </p>
+
+            <!-- Error Bound Equation Box -->
+            <div class="mb-6 p-6 border-2 border-slate-200 bg-slate-50 rounded-lg shadow-sm hover:border-indigo-300 transition-colors">
+              <div class="flex flex-col md:flex-row gap-6 items-center">
+                <div class="flex-1 text-center text-lg md:text-xl font-medium w-full overflow-x-auto text-slate-800">
+                  $$\text{err}_{m,D}(f) \lesssim \tilde{V}_f + \mathcal{O}\left(\frac{1}{\text{poly}(m)}\right) V_f$$
+                </div>
+                <div class="flex-1 w-full border-t md:border-t-0 md:border-l border-indigo-300 pt-4 md:pt-0 md:pl-6">
+                  <ul class="list-disc list-inside text-sm text-slate-700 space-y-2">
+                    <li><strong>$\tilde{V}_f$</strong>: Directional CDNV (Decision-axis variance).</li>
+                    <li><strong>$V_f$</strong>: Standard CDNV (Global within-class variance).</li>
+                    <li><strong>$m$</strong>: Number of labeled examples (shots) per class.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-lg text-slate-700 mb-6">
+              A similar directional bound was proposed in <a href="https://arxiv.org/abs/2506.04411" class="hover:underline text-indigo-600 font-medium" target="_blank">[Luthra et al., 2025]</a>, but by cleanly separating the intrinsic decision-axis variability from finite-sample centroid estimation errors, we provide a reliable and significantly tighter bound that remains non-vacuous at practical shot sizes.
             </p>
 
             <!-- Tabs Navigation for Observation 2 -->
@@ -429,7 +437,7 @@
       </section>
 
       <section class="mt-20 w-full max-w-5xl text-left fade-in-up">
-        <h2 class="text-2xl font-bold mb-4">Why Anisotropy is a feature and not a bug</h2>
+        <h2 class="text-2xl font-bold mb-4">Final Remarks: Why Anisotropy is a feature and not a bug</h2>
         <p class="text-lg leading-relaxed text-slate-700 mb-4">
           Let's zoom in on that multitask orthogonality experiment. In supervised learning, achieving perfect Neural Collapse (low global CDNV) means <em>all</em> variance is collapsed. The representations become incredibly rigid and specialized only for the exact task they were trained on. But if you collapse everything, you destroy the feature variance needed for <em>other</em> tasks. A perfectly collapsed model can't easily generalize to new, unseen labelings!
         </p>
@@ -459,6 +467,7 @@
       <footer class="mt-20 border-t pt-6 text-center text-sm text-slate-500 w-full max-w-5xl">
         © 2026 Built with ☕. <br />
         Contact: <a href="mailto:luthra@tamu.edu" class="underline">luthra@tamu.edu</a>
+        &middot; <a href="mailto:yashsalunkhe619@tamu.edu" class="underline">yashsalunkhe619@tamu.edu</a>
         &middot; <a href="mailto:galanti@tamu.edu" class="underline">galanti@tamu.edu</a>
       </footer>
     </main>
